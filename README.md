@@ -24,7 +24,7 @@ open -a Safari http://localhost:5173/
 
 ## Example
 
-![Mandelbrot Explorer](docs/assets/sampler1.png){width=400 height=300}
+![Mandelbrot Explorer](docs/assets/sampler1.png)
 
 ## Implementation
 
