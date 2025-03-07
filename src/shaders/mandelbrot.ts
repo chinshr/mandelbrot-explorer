@@ -32,6 +32,8 @@ void main() {
     for(int iter = 0; iter < 1000; iter++) {
         if(iter >= maxIterations) break;
         
+        // Iterate z = z² + c and check if the point escapes (magnitude > 2)
+        // If it doesn't escape within maxIterations, it's considered part of the Mandelbrot set
         z = complexSquare(z) + c;
         
         if(dot(z, z) > 4.0) {
