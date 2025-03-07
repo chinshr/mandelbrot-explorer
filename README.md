@@ -22,6 +22,10 @@ open -a Safari http://localhost:5173/
 1. Pan by dragging (press left-mouse-button + move mouse up/down/left/right) 
 2. Zoom in/out using the mouse wheel
 
+## Example
+
+![Mandelbrot Explorer](docs/assets/sampler1.png){width=400 height=300}
+
 ## Implementation
 
 * Vite 
