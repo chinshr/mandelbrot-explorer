@@ -36,22 +36,22 @@ void main() {
         // If it doesn't escape within maxIterations, it's considered part of the Mandelbrot set
         z = complexSquare(z) + c;
         
-        if(dot(z, z) > 4.0) {
+        if(dot(z, z) > 24.0) {
             break;
         }
         i = iter;
     }
     
     if(i == maxIterations - 1) {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    } else {
-        float hue = float(i) / float(maxIterations);
-        float sat = 0.6;
-        float val = 1.0;
-        if(i == maxIterations - 1) val = 0.0;
-        
+        // Points inside the set are bright and colorful
+        float hue = length(z) * 0.1; // Use the final z value to create varying colors
+        float sat = 0.8;  // High saturation for vibrant colors
+        float val = 0.9;  // High value for brightness
         vec3 rgb = hsv2rgb(vec3(hue, sat, val));
         gl_FragColor = vec4(rgb, 1.0);
+    } else {
+        // Points outside the set are darker
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     }
 }
 `; 
