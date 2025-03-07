@@ -14,10 +14,10 @@ export function MandelbrotExplorer() {
     
     const uniforms = useMemo(() => ({
         resolution: { value: new Vector2(size.width, size.height) },
-        offset: { value: offset },
-        zoom: { value: zoom },
+        offset: { value: new Vector2(0, 0) },
+        zoom: { value: 1.0 },
         maxIterations: { value: 100 }
-    }), [size, offset, zoom]);
+    }), [size]);
 
     useEffect(() => {
         if (materialRef.current) {
@@ -25,12 +25,19 @@ export function MandelbrotExplorer() {
         }
     }, [size]);
 
+    useEffect(() => {
+        if (materialRef.current) {
+            materialRef.current.uniforms.offset.value.copy(offset);
+            materialRef.current.uniforms.zoom.value = zoom;
+        }
+    }, [offset, zoom]);
+
     const handleOffsetChange = useCallback((delta: Vector2) => {
         setOffset(prev => new Vector2(
-            prev.x + delta.x / zoom,
-            prev.y + delta.y / zoom
+            prev.x + delta.x,
+            prev.y + delta.y
         ));
-    }, [zoom]);
+    }, []);
 
     const handleZoomChange = useCallback((factor: number) => {
         setZoom(prev => prev * factor);
@@ -57,6 +64,7 @@ export function MandelbrotExplorer() {
             <MandelbrotControls 
                 onOffsetChange={handleOffsetChange}
                 onZoomChange={handleZoomChange}
+                currentZoom={zoom}
             />
         </>
     );
