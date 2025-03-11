@@ -29,17 +29,34 @@ void main() {
     vec2 z = vec2(0.0);
     int i = 0;
     
-    for(int iter = 0; iter < 1000; iter++) {
-        if(iter >= maxIterations) break;
-        
-        // Iterate z = z² + c and check if the point escapes (magnitude > 2)
-        // If it doesn't escape within maxIterations, it's considered part of the Mandelbrot set
-        z = complexSquare(z) + c;
-        
-        if(dot(z, z) > 24.0) {
-            break;
+    // Early escape check for points definitely outside the set
+    // Points outside the circle |c| > 2 always escape
+    float cMagnitude = dot(c, c);
+    if (cMagnitude > 4.0) {
+        i = 0;
+    } else {
+        // Main cardioid check: points in the main bulb are always in the set
+        float q = (c.x - 0.25) * (c.x - 0.25) + c.y * c.y;
+        if (q * (q + (c.x - 0.25)) < 0.25 * c.y * c.y) {
+            i = maxIterations - 1;
         }
-        i = iter;
+        // Period-2 bulb check
+        else if ((c.x + 1.0) * (c.x + 1.0) + c.y * c.y < 0.0625) {
+            i = maxIterations - 1;
+        }
+        else {
+            for(int iter = 0; iter < 1000; iter++) {
+                if(iter >= maxIterations) break;
+                
+                z = complexSquare(z) + c;
+                
+                float zMagnitude = dot(z, z);
+                if(zMagnitude > 4.0) { // Reduced from 24.0 since |z| > 2 guarantees escape
+                    break;
+                }
+                i = iter;
+            }
+        }
     }
     
     if(i == maxIterations - 1) {
