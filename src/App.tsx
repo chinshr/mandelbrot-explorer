@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber';
+import { Stats } from '@react-three/drei';
 import { MandelbrotExplorer } from './components/MandelbrotExplorer';
 import './App.css';
 
@@ -14,6 +15,7 @@ function App() {
         camera={{ position: [0, 0, 1], fov: 75 }}
       >
         <MandelbrotExplorer />
+        <Stats />
       </Canvas>
     </div>
   );
