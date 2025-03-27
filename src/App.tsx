@@ -15,7 +15,7 @@ function App() {
         camera={{ position: [0, 0, 1], fov: 75 }}
       >
         <MandelbrotExplorer />
-        <Stats />
+        {/* <Stats /> */}
       </Canvas>
     </div>
   );

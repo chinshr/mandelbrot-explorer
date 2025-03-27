@@ -34,7 +34,7 @@ export function MandelbrotControls({ onOffsetChange, onZoomChange, currentZoom, 
 
     const handleWheel = useCallback((event: WheelEvent) => {
         event.preventDefault();
-        const zoomFactor = event.deltaY > 0 ? 0.95 : 1.05;
+        const zoomFactor = event.deltaY > 0 ? 0.9 : 1.1;
         onZoomChange(zoomFactor, event.clientX, event.clientY);
     }, [onZoomChange]);
 

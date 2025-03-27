@@ -16,7 +16,7 @@ export function MandelbrotExplorer() {
     
     // Initial view centered on (-1.5, -1) with a viewport that includes (-2,0) and (-2,-2)
     const [offset, setOffset] = useState(new Vector2(-1.5, -1));
-    const [zoom, setZoom] = useState(0.8);
+    const [zoom, setZoom] = useState(2);
     const [mousePos, setMousePos] = useState(new Vector2(0, 0));
     const [viewportStack, setViewportStack] = useState<ViewportState[]>([]);
     
@@ -53,6 +53,10 @@ export function MandelbrotExplorer() {
         // Convert mouse coordinates to normalized device coordinates (-1 to 1)
         const x = (mouseX / size.width) * 2 - 1;
         const y = -(mouseY / size.height) * 2 + 1;
+
+        console.log('*** size', size.width, size.height);
+        console.log('*** mouse', mouseX, mouseY);
+        console.log('*** x, y', x, y);
         
         // Update mouse position
         setMousePos(new Vector2(x, y));
@@ -66,12 +70,12 @@ export function MandelbrotExplorer() {
             offset.y + (y * viewportSize / 2)
         );
         
-        console.log('Zoom:', {
-            factor,
-            from: { zoom, offset: { x: offset.x, y: offset.y } },
-            mouse: { x, y },
-            complex: { x: mouseComplex.x, y: mouseComplex.y }
-        });
+        // console.log('Zoom:', {
+        //     factor,
+        //     from: { zoom, offset: { x: offset.x, y: offset.y } },
+        //     mouse: { x, y },
+        //     complex: { x: mouseComplex.x, y: mouseComplex.y }
+        // });
         
         if (factor > 1) {
             // Zooming in - save current state to stack
