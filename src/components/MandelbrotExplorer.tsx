@@ -18,6 +18,7 @@ export function MandelbrotExplorer() {
     const [offset, setOffset] = useState(new Vector2(-1.5, -1));
     const [zoom, setZoom] = useState(2);
     const [mousePos, setMousePos] = useState(new Vector2(0, 0));
+    const [mouseComplex, setMouseComplex] = useState(new Vector2(0, 0));
     const [viewportStack, setViewportStack] = useState<ViewportState[]>([]);
     
     const uniforms = useMemo(() => ({
@@ -65,10 +66,10 @@ export function MandelbrotExplorer() {
         const viewportSize = 4.0 / zoom;
         
         // Calculate the complex space point under the mouse
-        const mouseComplex = new Vector2(
+        setMouseComplex(new Vector2(
             offset.x + (x * viewportSize / 2),
             offset.y + (y * viewportSize / 2)
-        );
+        ));
         
         // console.log('Zoom:', {
         //     factor,
@@ -95,16 +96,15 @@ export function MandelbrotExplorer() {
             
             // Calculate how much the offset should shift to maintain the relative position
             const offsetShift = new Vector2(
-                percentFromCenter.x * (viewportSize - newViewportSize) / 2,
-                percentFromCenter.y * (viewportSize - newViewportSize) / 2
+                (percentFromCenter.x * 4.0) * (viewportSize - newViewportSize),
+                (percentFromCenter.y * 4.0) * (viewportSize - newViewportSize)
             );
-            
+
             // Apply the shift to the current offset
             setOffset(prev => new Vector2(
                 prev.x + offsetShift.x,
                 prev.y + offsetShift.y
             ));
-            
         } else if (factor < 1 && viewportStack.length > 0) {
             // Zooming out - restore previous state from stack
             setViewportStack(prev => {
